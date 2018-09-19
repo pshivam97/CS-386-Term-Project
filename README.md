@@ -8,7 +8,7 @@
 
 ## Topic
 
-- *TO BE DECIDED*
+- Handwriting Recognition Software
 
 ## About 
 
