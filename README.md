@@ -8,7 +8,7 @@
 
 ## Topic
 
-- Handwriting Recognition Software
+**Handwriting Recognition Software**
 
 ## About 
 
