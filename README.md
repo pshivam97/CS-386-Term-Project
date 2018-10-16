@@ -8,7 +8,7 @@
 
 ## Topic
 
-**Handwriting Recognition Software**
+**Single-line Sentence Hand-written Recognition Software**
 
 ## About 
 
