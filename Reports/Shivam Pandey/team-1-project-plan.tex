@@ -1,0 +1,79 @@
+% Acknowledgements 
+% based on https://www.overleaf.com/latex/templates/ece-100-template
+
+% DO NOT CHANGE THIS PART !!!!!!!!!!!!!
+\documentclass[a4paper, 12pt]{article}
+\usepackage{geometry}
+\usepackage{graphicx}
+\graphicspath{ {./} }
+\usepackage{comment} % for multi-line comments (\ifx \fi) 
+\usepackage{lipsum} % generates Lorem Ipsum filler text. 
+\usepackage{newtxtext}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{graphicx,psfrag,epsf}
+\usepackage{subfigure}
+\usepackage{authblk}
+\geometry{margin=0.8in}
+% DO NOT CHANGE THIS PART !!!!!!!!!!!!!
+\usepackage{url}
+\usepackage{multirow}
+\usepackage{array}
+
+\begin{document}
+\title{Single-Line Handwritten Sentence Recognition}
+% \author{
+% \begin{tabular}{*{3}{>{\centering}p{.33\textwidth}}}
+% \large Shivam Pandey & \large Shivam Kumar & \large Abhishek Varghese 
+% \tabularnewline
+% \url{shivam.pandey.16001@iitgoa.ac.in} & \url{shivam.kumar.16001@iitgoa.ac.in} & \url{abhishek.varghese.16001@iitgoa.ac.in}
+% \end{tabular}
+% }
+
+\author{Shivam Pandey | Shivam Kumar | Abhishek Varghese} 
+\date{November 3, 2018}
+
+\maketitle
+
+% NOTE: NOT MORE THAN 2 PAGES  
+
+ 
+\section{Introduction and Overview}
+Over the last few decades, research on handwriting recognition has made impressive progress. The research and development on handwritten word recognition are to a large degree motivated by many application areas, such as automated postal address, data acquisition in banks, text-voice conversion, security, etc. As the prices of scanners, computers and handwriting-input devices are falling steadily, we have seen an increased demand for handwriting recognition systems and software packages. Few commercial handwriting recognition systems are now available in the market. Current commercial systems have an impressive performance in recognizing machine-printed characters and neatly written texts. For instance, Xerox in the U.S. has developed TextBridge for converting hardcopy documents into electronic document files. Notwithstanding the impressive progress, there is still a significant performance gap between the human and the machine in recognizing off-line unconstrained handwritten words. The difficulties encountered in recognizing unconstrained handwritings are mainly caused by huge variations in writing styles and the overlapping and the interconnection of neighboring characters. Furthermore, many applications demand very high recognition accuracy and reliability. Sadly, in the banking sector, although ATMs and networked banking systems being widely available, many transactions are still carried out in the form of cheques. \emph{Google's Tesseract}, despite being developed by the greatest IT beast, its output will have very poor quality if the input images are not preprocessed to suit it. This motivates us to research and develop a handwritten sentence recognizer with much improved accuracy. 
+
+\section{Project Plan}
+Our project primarily focuses in recognizing a single-line handwritten English sentence using Machine Learning and Deep Learning methods such as \emph{Convolutional Neural Network(CNN), Recurrent Neural Network(RNN), Long Short Term Memory(LSTM) units} and \emph{Connectionist Temporal Classification(CTC)}. The input given to the recognition system is an image of a single-line handwritten English sentence, which is processed through a series of formerly mentioned deep learning techniques to finally output the sentence in machine-printed format. The entire handwritten sentence recognition algorithm can be broadly broken down into three major parts, discussed as follows:-
+\subsection{Line Segmentation into Words}
+Commencement of our algorithm entails segmenting the input sentence image into a sequence of words' images. Few approaches in the literature have dealt with line segmentation. Most approaches focus on identifying physical gaps between the words. These methods assume that gaps between words are larger than the gaps between characters. However, in hand-writing, exceptions are commonplace because of flourishes in writing styles with leading and trailing ligatures. Dealing successfully with all segmentation issues, we obtain the images of individual words which will be fed into our Neural Network model.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{"Line segmentation".png}
+\caption{Line Segmentation into Words}
+\end{figure}
+
+\subsection{Handwritten Word Recognition}
+After line segmentation step, we obtain a sequence of images of words extracted from the image of the sentence. Next step is to recognise each of the word from the image. We will build a Neural Network (NN) which is trained on word-images from the IAM dataset. This NN consists of CNN layers, RNN layers (LSTM-RNN) and a final Connectionist Temporal Classification (CTC) layer. The NN outputs a character-probability matrix. This matrix is either used for CTC loss calculation or for CTC decoding. Ultimately, after performing this second step of the algorithm, we will obtain the machine-printed words out of the images provided as input.
+
+\subsection{Improving Accuracy of Recognized Sentence}
+To our understanding, this is a subtle part of the algorithm. It deals with improving the accuracy of the output using some techniques such as text-correction(if the recognized word is not contained in a dictionary, search for the most similar one), deslanting, etc.
+
+\section{Tentative Individual Plan}
+Each of the 3 parts are mapped to each of the 3 team members in the following way :-
+\begin{itemize}
+    \item Shivam Kumar - Line Segmentation into Word
+    \item Shivam Pandey - Handwritten Word Recognition
+    \item Abhishek Varghese - Improving Accuracy of Recognized Sentence
+\end{itemize}
+Although we have tentatively distributed the work in this fashion, there is no stringent boundation that each person will \emph{only} do the work assigned to him. We might be working collaboratively when a person is unable to fix a problem notwithstanding his sincere efforts.
+\begin{thebibliography}{9}
+	
+
+\bibitem{Tutorial_on_HTR} Harald Scheidl : \emph{Build a Handwritten Text Recognition System using TensorFlow}. Available  from world wide web : https://towardsdatascience.com/build-a-handwritten-text-recognition-system-using-tensorflow-2326a3487cd5
+
+\end{thebibliography}
+
+\end{document}
