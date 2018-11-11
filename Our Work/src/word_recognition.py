@@ -25,4 +25,4 @@ def get_recognized_words_list(sentence_path) :
     os.system("rm w*.png")
     return recognized_words_list
 
-print(get_recognized_words_list('test7.png'))
+print(get_recognized_words_list('test8.png'))
