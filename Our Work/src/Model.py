@@ -102,7 +102,7 @@ class Model:
 			decoder = tf.nn.ctc_beam_search_decoder(inputs=ctcIn3dTBC, sequence_length=self.seqLen, beam_width=50, merge_repeated=False)
 		elif self.decoderType == DecoderType.WordBeamSearch:
 			# import compiled word beam search operation (see https://github.com/githubharald/CTCWordBeamSearch)
-			word_beam_search_module = tf.load_op_library('TFWordBeamSearch.so')
+			word_beam_search_module = tf.load_op_library('./TFWordBeamSearch.so')
 
 			# prepare information about language (dictionary, characters in dataset, characters forming words) 
 			chars = str().join(self.charList)
