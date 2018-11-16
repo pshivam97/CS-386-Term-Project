@@ -184,7 +184,7 @@ def split_sentence(image_location):
   word_images = [remove_space(x) for x in word_images]
 
   # Resizing every word image to make height equal to 50
-  word_images = [cv2.resize(x, (int(x.shape[1]*(100/x.shape[0])),int(x.shape[0]*(100/x.shape[0]))), interpolation = cv2.INTER_NEAREST) for x in word_images]
+  word_images = [cv2.resize(x, (int(x.shape[1]*(64/x.shape[0])),int(x.shape[0]*(64/x.shape[0]))), interpolation = cv2.INTER_NEAREST) for x in word_images]
 
   # Saving word images in current directory
   paths = []
