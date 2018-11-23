@@ -131,13 +131,6 @@ from PIL import Image
 import cv2
 
 
-# Function to view image in jupyter notebook
-from IPython.display import display
-from IPython.display import Image as _Imgdis
-
-def ishow(filename):
-    display(_Imgdis(filename, height=100))
-
 # Convert individual grayscale pixel to binary
 convert_to_binary = lambda x: 0 if x<128 else 255
 
