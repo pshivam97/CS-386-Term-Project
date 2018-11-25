@@ -11,6 +11,9 @@ import os
 import cv2
 from matplotlib import pyplot as plt
 
+# Global Variables
+output_image_height = 128
+
 # This function will display image given the numpy ndarray
 def disp_image(M):
   plt.imshow(M)
@@ -98,6 +101,55 @@ def remove_space(M, weight_of_dark = -1, weight_of_light = 100):
 
   return M[max_U:max_D+1,max_L:max_R+1]
 
+def get_cutpoints_kmeans(M):
+  M = np.array(M)
+
+  # Converting picture to binary
+  vf = np.vectorize(convert_to_binary)
+  M = vf(M)
+
+  M = np.sum(M,axis=0) # Summing every column of image_array
+  M = (max(M) - min(M)) - (M - min(M)) # Normalize
+
+  threshold = np.average(M) / 5
+
+  space_list = []
+  start_point = 0
+  s_counter = 0
+  s_bool = False
+
+  for i in range(len(M)):
+    if M[i] >= threshold:
+      if s_bool:
+        space_list.append((start_point,s_counter))
+      start_point = i
+      s_counter = 0
+      s_bool = False
+    else:
+      s_counter += 1
+      s_bool = True
+
+  from sklearn.cluster import KMeans
+  list1 = [x[1] for x in space_list]
+  km = KMeans(n_clusters = 2, random_state=90).fit(np.array(list1).reshape(-1,1))
+  print(list1)
+  print(km.labels_)
+  klabels = km.labels_
+
+  list_0 = [space_list[x[0]][1] // 2 for x in enumerate(klabels) if x[1] == 0]
+  list_1 = [space_list[x[0]][1] // 2 for x in enumerate(klabels) if x[1] == 1]
+
+  avg_0 = sum(list_0)/len(list_0)
+  avg_1 = sum(list_1)/len(list_1)
+  
+  t_label = 1
+  if avg_0 > avg_1 :
+    t_label = 0
+
+  cutpoint_list = [space_list[x[0]][0] + space_list[x[0]][1] // 2 for x in enumerate(klabels) if x[1] == t_label]
+
+  return cutpoint_list
+
 # This function will return a list points, where each point in a separate space between words
 def get_cutpoints(M):
   gamma = int(M.shape[0] / 3)
@@ -178,7 +230,7 @@ def split_sentence(image_location):
   current_image = remove_space(current_image)
 
   # Getting cutpoints
-  cutpoint_list = get_cutpoints(current_image)
+  cutpoint_list = get_cutpoints_kmeans(current_image)
 
   # Getting images of words
   word_images = get_words_image(current_image, cutpoint_list)
@@ -187,7 +239,7 @@ def split_sentence(image_location):
   word_images = [remove_space(x) for x in word_images]
 
   # Resizing every word image to make height equal to 50
-  word_images = [cv2.resize(x, (int(x.shape[1]*(64/x.shape[0])),int(x.shape[0]*(64/x.shape[0]))), interpolation = cv2.INTER_NEAREST) for x in word_images]
+  word_images = [cv2.resize(x, (int(x.shape[1]*(output_image_height/x.shape[0])),int(x.shape[0]*(output_image_height/x.shape[0]))), interpolation = cv2.INTER_NEAREST) for x in word_images]
 
   # Saving word images in current directory
   paths = []
@@ -196,3 +248,9 @@ def split_sentence(image_location):
       paths.append('w'+str(i+1)+'.png')
 
   return paths
+
+
+if __name__ == '__main__':
+  import sys
+  splitted_words = split_sentence(sys.argv[1])
+  print(splitted_words)
