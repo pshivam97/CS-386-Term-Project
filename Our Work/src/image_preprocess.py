@@ -103,6 +103,7 @@ def remove_space(M, weight_of_dark = -1, weight_of_light = 100):
 
 def get_cutpoints_kmeans(M):
   M = np.array(M)
+  Mdas = np.array(M)
 
   # Converting picture to binary
   vf = np.vectorize(convert_to_binary)
@@ -129,15 +130,19 @@ def get_cutpoints_kmeans(M):
       s_counter += 1
       s_bool = True
 
+  if (len(space_list) < 2 ):
+    return get_cutpoints(Mdas)
+
   from sklearn.cluster import KMeans
   list1 = [x[1] for x in space_list]
   km = KMeans(n_clusters = 2, random_state=90).fit(np.array(list1).reshape(-1,1))
-  print(list1)
-  print(km.labels_)
   klabels = km.labels_
 
   list_0 = [space_list[x[0]][1] // 2 for x in enumerate(klabels) if x[1] == 0]
   list_1 = [space_list[x[0]][1] // 2 for x in enumerate(klabels) if x[1] == 1]
+
+  if len(list_0) < 1 or len(list_1) < 1 : 
+    return get_cutpoints(Mdas)
 
   avg_0 = sum(list_0)/len(list_0)
   avg_1 = sum(list_1)/len(list_1)
