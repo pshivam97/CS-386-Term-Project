@@ -10,7 +10,7 @@ def get_recognized_words_list(sentence_path ) :
 
     for each_word_image in words_image_list :
         copyfile(each_word_image, "../data/test.png")
-        result = subprocess.run(['python3', 'main.py'], stdout=subprocess.PIPE).stdout.decode('utf-8')
+        result = subprocess.run(['python3', 'main.py','--wordbeamsearch'], stdout=subprocess.PIPE).stdout.decode('utf-8')
         result = result.strip()
         recognized_word = str()
 

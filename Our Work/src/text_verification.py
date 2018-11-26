@@ -63,13 +63,12 @@ def get_neighbours(state,sentence_words) :
 
 
 def correct_text(sentence) :
-    print("started ucs1")
+    print("started ucs")
     fringe = PriorityQueue()
     initial_state = ((),0)
     fringe.push(initial_state, initial_state[1])
     while not fringe.isEmpty() :
         curr_state = fringe.pop()
-        print(curr_state)
         if len(curr_state[0]) == len(sentence) :
             final_state = curr_state
             break
@@ -77,7 +76,7 @@ def correct_text(sentence) :
         for i in neighbours :
             fringe.push(i,i[1])
 
-    print(final_state)
+    return final_state[0]
 
 
 
@@ -113,7 +112,7 @@ with open('../model/language_model.pickle','rb') as f :
     word_list = pickle.load(f)
     
 
-# rec = get_recognized_words_list(sys.argv[1])
-sentence = "hello world"
-rec = correct_text(sentence.split())
-print (" ".join(rec))
+sentence = get_recognized_words_list(sys.argv[1])
+print("Output of CTC : ", sentence)
+rec = correct_text(sentence)
+print("Corrected Output : ", rec)
