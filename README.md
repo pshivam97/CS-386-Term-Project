@@ -32,9 +32,13 @@ The NN outputs a character-probability matrix. This matrix is either used for CT
 
 ### (C) Improving Accuracy of Recognized Sentence
 
-This section deals with improving the accuracy of the output procured from neural network using techniques such as LM and MLE. To build a LM, we collect the text from All News dataset, clean it of other symbols except characters and spaces, and tokenize it. From the resulting data, we create a set, each for unigrams and bigrams. We will denote a word as 'w' from here. We calculate probabilities (P(w)) of unigrams, and construct a conditional probability table (CPT) from the bigrams. Next, a tree is generated for implementation of tree search algorithms, where each node at any level represents a word from the set of words, and the number of nodes in each level equals the cardinality of this set. The root node represents the empty word. A node at a given level is connected to each node of the next level. An edge connecting an i\textsuperscript{th} level node (w\textsubscript{i}) to an (i+1)\textsuperscript{th} level node (w\textsubscript{i+1}) has a weight given by:-
+This section deals with improving the accuracy of the output procured from neural network using techniques such as LM and MLE. To build a LM, we collect the text from All News dataset, clean it of other symbols except characters and spaces, and tokenize it. From the resulting data, we create a set, each for unigrams and bigrams. We will denote a word as 'w' from here. We calculate probabilities (P(w)) of unigrams, and construct a conditional probability table (CPT) from the bigrams. Next, a tree is generated for implementation of tree search algorithms, where each node at any level represents a word from the set of words, and the number of nodes in each level equals the cardinality of this set. The root node represents the empty word. A node at a given level is connected to each node of the next level. An edge connecting an i\textsuperscript{th} level node (w<sub>i</sub>) to an (i+1)\textsuperscript{th} level node (w<sub>i+1</sub>) has a weight given by:-
 
-Levenshtein\_Distance(word appearing in (i+1)\textsuperscript{th} level, (i+1)\textsuperscript{th} word in current sentence) * (1 - P(w\textsubscript{i+1}|w\textsubscript{i})) 
+L_D : Levenshtein_Distance
+w<sub>i+1</sub> :
+w<sub>i+1</sub> :
+
+L_D(word appearing in (i+1)<sup>th</sup> level, (i+1)<sup>th</sup> word in current sentence) * (1 - P(w<sub>i+1</sub>|w<sub>i</sub>})) 
 
 where P(w\textsubscript{i+1}|w\textsubscript{i}) is computed from the CPT. A path from the root node to any leaf node describes a sentence, and the length of the path reveals how likely it is that the sentence made by nodes occurring in the path is actually the one given to us as input. Uniform cost search is applied to the this tree and the shortest path gives the correctly determined sentence.
 
