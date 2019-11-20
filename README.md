@@ -40,7 +40,7 @@ w<sub>i+1</sub> :
 
 L_D(word appearing in (i+1)<sup>th</sup> level, (i+1)<sup>th</sup> word in current sentence) * (1 - P(w<sub>i+1</sub>|w<sub>i</sub>})) 
 
-where P(w\textsubscript{i+1}|w\textsubscript{i}) is computed from the CPT. A path from the root node to any leaf node describes a sentence, and the length of the path reveals how likely it is that the sentence made by nodes occurring in the path is actually the one given to us as input. Uniform cost search is applied to the this tree and the shortest path gives the correctly determined sentence.
+where P(w<sub>i+1</sub>|w<sub>i</sub>) is computed from the CPT. A path from the root node to any leaf node describes a sentence, and the length of the path reveals how likely it is that the sentence made by nodes occurring in the path is actually the one given to us as input. Uniform cost search is applied to the this tree and the shortest path gives the correctly determined sentence.
 
 ## Experimental Analysis
 
